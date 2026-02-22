@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#000"/>
+  <!-- Amber grid -->
+  <line x1="0" y1="256" x2="512" y2="256" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="256" y1="0" x2="256" y2="512" stroke="#1a1a1a" stroke-width="1"/>
+  <!-- M letterform -->
+  <text x="256" y="300" font-family="monospace" font-size="240" font-weight="700"
+        text-anchor="middle" fill="#f59e0b" letter-spacing="-8">M</text>
+  <!-- Corner marks -->
+  <rect x="20" y="20" width="20" height="3" fill="#f59e0b" opacity="0.4"/>
+  <rect x="20" y="20" width="3" height="20" fill="#f59e0b" opacity="0.4"/>
+  <rect x="472" y="20" width="20" height="3" fill="#f59e0b" opacity="0.4"/>
+  <rect x="489" y="20" width="3" height="20" fill="#f59e0b" opacity="0.4"/>
+  <rect x="20" y="489" width="20" height="3" fill="#f59e0b" opacity="0.4"/>
+  <rect x="20" y="472" width="3" height="20" fill="#f59e0b" opacity="0.4"/>
+  <rect x="472" y="489" width="20" height="3" fill="#f59e0b" opacity="0.4"/>
+  <rect x="489" y="472" width="3" height="20" fill="#f59e0b" opacity="0.4"/>
+</svg>

@@ -1,43 +1,37 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from './providers';
+import { minikitConfig } from '@/minikit.config';
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://mirror.baised.xyz';
+const { miniapp } = minikitConfig;
 
 export const metadata: Metadata = {
-  title: 'MIRROR — Social Copy Trade',
-  description: 'One-tap copy trades from wallets you follow on Farcaster. Powered by Base.',
+  title:       'MIRROR — Social Copy Trade',
+  description: miniapp.description,
   openGraph: {
-    title: 'MIRROR',
-    description: 'One-tap copy trades. Zero gas. Zero popups.',
-    images: [{ url: `${APP_URL}/og.png`, width: 1200, height: 630 }],
+    title:       miniapp.ogTitle,
+    description: miniapp.ogDescription,
+    images:      [{ url: miniapp.ogImageUrl, width: 1200, height: 630 }],
   },
   other: {
     /**
-     * fc:miniapp — Feb 2026 spec (replaces fc:frame for Mini App embeds)
-     * Shows a "Launch" button in feed previews inside Warpcast/Base App.
-     * fc:frame kept below for Frames v1 backwards compat.
+     * fc:miniapp — Feb 2026 spec
+     * Controls how MIRROR appears as an embed in Warpcast / Base App feeds.
      */
     'fc:miniapp': JSON.stringify({
-      version:  '1',
-      imageUrl: `${APP_URL}/og.png`,
+      version:  miniapp.version,
+      imageUrl: miniapp.ogImageUrl,
       button: {
         title:  'Open MIRROR',
         action: {
-          type: 'launch_frame',
-          name: 'MIRROR',
-          url:  APP_URL,
-          splashImageUrl:         `${APP_URL}/splash.png`,
-          splashBackgroundColor:  '#000000',
+          type:                 'launch_frame',
+          name:                 miniapp.name,
+          url:                  miniapp.homeUrl,
+          splashImageUrl:       miniapp.splashImageUrl,
+          splashBackgroundColor: miniapp.splashBackgroundColor,
         },
       },
     }),
-    // Backwards compat
-    'fc:frame':          'vNext',
-    'fc:frame:image':    `${APP_URL}/og.png`,
-    'fc:frame:button:1': 'Open MIRROR',
-    'fc:frame:button:1:action': 'link',
-    'fc:frame:button:1:target': APP_URL,
   },
 };
 
