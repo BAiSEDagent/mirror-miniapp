@@ -43,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="theme-color" content="#000000" />
+        <meta name="base:app_id" content="699b75aceb8da8c3b3d7b174" />
       </head>
       <body className="bg-void text-primary font-mono min-h-screen overflow-x-hidden">
         <Providers>{children}</Providers>
