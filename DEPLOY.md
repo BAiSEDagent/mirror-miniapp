@@ -1,33 +1,73 @@
-# Deploy Instructions (2 minutes)
+# MIRROR — Deploy Checklist
 
-## Option A: Vercel CLI (fastest)
+## Step 1: Deploy to Vercel
+
 ```bash
 cd /tmp/mirror-miniapp
-vercel login          # log in with your Vercel account
-vercel --prod         # deploy — URL returned immediately
+vercel login          # your Vercel account
+vercel --prod         # deploys, returns URL e.g. mirror-miniapp.vercel.app
 ```
 
-## Option B: GitHub → Vercel (automatic)
-1. Go to https://vercel.com/new
-2. Import: github.com/BAiSEDagent/mirror-miniapp
-3. Add env vars (from .env.example)
-4. Deploy
+Or via GitHub import: https://vercel.com/new → Import `BAiSEDagent/mirror-miniapp`
 
-## Required env vars (set in Vercel dashboard):
-NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
-NEXT_PUBLIC_CDP_CLIENT_KEY=        # https://portal.cdp.coinbase.com/
-NEXT_PUBLIC_PAYMASTER_URL=         # optional (gasless)
-FARCASTER_HEADER=                  # run: npx create-onchain --manifest
-FARCASTER_PAYLOAD=
-FARCASTER_SIGNATURE=
-NEYNAR_API_KEY=                    # https://dev.neynar.com/
-ALCHEMY_API_KEY=                   # https://dashboard.alchemy.com/
-X402_FACILITATOR_URL=https://x402.org/facilitate
-MIRROR_TREASURY_ADDRESS=0xYourTreasury
+Set these env vars in Vercel dashboard (Settings → Environment Variables):
 
-## After deploy:
-# 1. Update NEXT_PUBLIC_APP_URL to your real Vercel URL
-# 2. Run: npx create-onchain --manifest (generates Farcaster JFS for that domain)
-# 3. Add FARCASTER_* vars to Vercel
-# 4. Redeploy
-# 5. Test manifest: curl https://your-domain/.well-known/farcaster.json
+```
+NEXT_PUBLIC_APP_URL          = https://mirror-miniapp.vercel.app   ← your actual URL
+NEXT_PUBLIC_CDP_CLIENT_KEY   = ...  # https://portal.cdp.coinbase.com/
+NEXT_PUBLIC_PAYMASTER_URL    = ...  # optional gasless (CDP Paymaster)
+NEYNAR_API_KEY               = ...  # https://dev.neynar.com/
+ALCHEMY_API_KEY              = ...  # https://dashboard.alchemy.com/
+X402_FACILITATOR_URL         = https://x402.org/facilitate
+MIRROR_TREASURY_ADDRESS      = 0x...  # your wallet
+NEXT_PUBLIC_BASE_RPC         = https://mainnet.base.org
+```
+
+Redeploy after adding env vars.
+
+---
+
+## Step 2: Sign the Manifest
+
+1. Go to → **https://www.base.dev/preview?tab=account**
+2. Paste your Vercel URL in the **App URL** field → Submit
+3. Sign with your Farcaster account
+4. Copy the three values into Vercel env vars:
+   ```
+   FARCASTER_HEADER    = eyJ...
+   FARCASTER_PAYLOAD   = eyJ...
+   FARCASTER_SIGNATURE = 0x...
+   ```
+5. Redeploy: `vercel --prod`
+
+---
+
+## Step 3: Verify
+
+```bash
+# Manifest looks correct
+curl https://your-domain/.well-known/farcaster.json | python3 -m json.tool
+
+# OG image renders
+open https://your-domain/api/og
+
+# Icon renders
+open https://your-domain/api/og?type=icon
+```
+
+---
+
+## Step 4: Disable Vercel Auth (Required)
+
+Vercel's Deployment Protection blocks the Farcaster hub from reading your manifest.
+
+Vercel Dashboard → Settings → Deployment Protection → toggle **Vercel Authentication** OFF → Save
+
+---
+
+## Step 5: Submit for Discovery
+
+Once live and manifest signed, submit at:
+**https://www.base.dev/preview** (or Warpcast developer portal)
+
+The mini app will appear in the Base App catalog once it has usage metrics.
